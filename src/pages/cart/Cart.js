@@ -7,7 +7,7 @@ import {
   CLEAR_CART,
   DECREASE_CART,
   REMOVE_FROM_CART,
-  // SAVE_URL,
+  SAVE_URL,
   selectCartItems,
   selectCartTotalAmount,
   selectCartTotalQuantity,
@@ -16,7 +16,7 @@ import styles from "./Cart.module.scss";
 import { FaTrashAlt } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 import Card from "../../components/card/Card";
-// import { selectIsLoggedIn } from "../../redux/slice/authSlice";
+import { selectIsLoggedIn } from "../../redux/slice/authSlice";
 
 
 
@@ -25,9 +25,9 @@ const Cart = () => {
   const cartTotalAmount = useSelector(selectCartTotalAmount);
   const cartTotalQuantity = useSelector(selectCartTotalQuantity);
   const dispatch = useDispatch();
-  // const isLoggedIn = useSelector(selectIsLoggedIn);
+  const isLoggedIn = useSelector(selectIsLoggedIn);
 
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
 
   const increaseCart = (cart) => {
     dispatch(ADD_TO_CART(cart));
@@ -48,19 +48,19 @@ const Cart = () => {
   useEffect(() => {
     dispatch(CALCULATE_SUBTOTAL());
     dispatch(CALCULATE_TOTAL_QUANTITY());
-    // dispatch(SAVE_URL(""));
+    dispatch(SAVE_URL(""));
   }, [cartItems, dispatch]);
 
-  // const url = window.location.href;
+  const url = window.location.href;
 
-  // const checkout = () => {
-  //   if (isLoggedIn) {
-  //     navigate("/checkout-details");
-  //   } else {
-  //     dispatch(SAVE_URL(url));
-  //     navigate("/login");
-  //   }
-  // };
+  const checkout = () => {
+    if (isLoggedIn) {
+      navigate("/checkout-details");
+    } else {
+      dispatch(SAVE_URL(url));
+      navigate("/login");
+    }
+  };
 
   return (
     <section>
@@ -158,7 +158,7 @@ const Cart = () => {
                   <p>Tax and shipping calculated at checkout</p>
                   <button
                     className="--btn --btn-primary --btn-block"
-                    // onClick={checkout}
+                    onClick={checkout}
                   >
                     Checkout
                   </button>

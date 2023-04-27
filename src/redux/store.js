@@ -11,8 +11,8 @@ const rootReducer = combineReducers({
   product: productReducer,
   filter: filterReducer,
   cart: cartReducer,
-  // checkout: checkoutReducer,
-  // orders: orderReducer,
+  checkout: checkoutReducer,
+  orders: orderReducer,
 })
 
 const store = configureStore({
